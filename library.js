@@ -76,3 +76,33 @@ function removeArrayForValue(arr, val, type) {
         return type === '%' ? item.indexOf(val) !== -1 : item !== val;
     })
 }
+
+// 校验字符串
+function checkType(str, type) {
+    switch(type) {
+        case 'email': 
+            return /^[\w-]+(\.[\w-]+)*@[\w-]+(\.[\w-]+)+$/.test(str);
+        case 'phone':
+            return /^1[3|4|5|7|8][0-9]{9}$/.test(str);
+        case 'tel':
+            return /^(0\d{2,3}-\d{7,8})(-\d{1,4})?$/.test(str);
+        case 'number': 
+            return /^[0-9]$/.test(str);
+        case 'english':
+            return /^[a-zA-Z]+$/.test(str);
+        case 'chinese':
+            return /^[\u4E00-\u9FA5]+$/.test(str);
+        case 'lower':
+            return /^[a-z]+$/.test(str);
+        case 'upper':
+            return /^[A-Z]+$/.test(str);
+        default :
+            return true;
+    }
+}
+
+// 数组去重 ES6 from()
+function removeRepeatArray(arr) {
+    return Array.from(new Set(arr))
+}
+
