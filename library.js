@@ -106,3 +106,29 @@ function removeRepeatArray(arr) {
     return Array.from(new Set(arr))
 }
 
+// 节流函数
+var func = debounce(function() {
+    // 繁重、耗性能的操作
+}, 300);
+window.addEventListener('resize', func);
+
+function debounce(fn, wait) {
+    var td;
+    return function() {
+        clearTimeout(td);
+        td = setTimeout(fn, wait);
+    }
+}
+
+// 只执行一次的函数
+function once(fn, context) {
+    var result;
+    return function() {
+        if (fn) {
+            result = fn.apply(context, arguments);
+        }
+        return result;
+    }
+} 
+
+
