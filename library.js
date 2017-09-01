@@ -131,4 +131,24 @@ function once(fn, context) {
     }
 } 
 
+// 取出一个数组中的最大值和最小值
+var numbers = [5, 458 , 120 , -215 , 228 , 400 , 122205, -85411];
+var max = Math.max.apply(Math, numbers);
+var min Math.min.apply(Math, numbers);
 
+// m(6) n(8)
+Array(6).fill(8);
+
+// 最短的代码实现数组去重
+[...new Set([1, "1", 2, 1, 1, 3])]
+
+// 正则的实现金钱格式化
+var test = '1234567890';
+var format = test.replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+
+// 优雅实现金钱格式化
+function formatCash(str) {
+    return str.split('').reverse().reduce((prev, next, index) => {
+            return ((index % 3) ? next : (next + ',')) + prev
+       })
+}
