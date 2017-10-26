@@ -12,7 +12,7 @@ let obj = {
 // 对象的属性key转换格式
 function format(obj) {
     let newObj = {};
-    for(let k in obj) {
+    for (let k in obj) {
         if (obj.hasOwnProperty(k)) {
             let K = k.toUpperCase();
             if (k !== K) {
@@ -28,9 +28,9 @@ function format(obj) {
 // 过滤属性的值是否为空
 function filterParams(obj) {
     let newObj = {};
-    for(let key in obj) {
+    for (let key in obj) {
         if ((obj[key] === 0 || obj[key]) && obj[key].toString().replace(/(^\s*)|(\s*$)/g, '') !== '') {
-            newObj[key]  = obj[key];
+            newObj[key] = obj[key];
         }
     }
     return newObj;
@@ -44,16 +44,17 @@ function randomNumber(count) {
 // 获取url参数
 function getUrlPrmt(url) {
     url = url ? url : window.location.href;
-    let _pa = url.substring(url.indexOf('?') + 1), 
-         _arrS = _pa.split('&'), 
-         _rs = {};
+    let _pa = url.substring(url.indexOf('?') + 1),
+        _arrS = _pa.split('&'),
+        _rs = {};
 
     for (let i = 0, _len = _arrS.length; i < _len; i++) {
         let pos = _arrS[i].indexOf('=');
         if (pos == -1) {
             continue;
         }
-        let name = _arrS[i].substring(0, pos), value = window.decodeURIComponent(_arrS[i].substring(pos + 1));
+        let name = _arrS[i].substring(0, pos),
+            value = window.decodeURIComponent(_arrS[i].substring(pos + 1));
         _rs[name] = value;
     }
     return _rs;
@@ -62,7 +63,7 @@ function getUrlPrmt(url) {
 // 设置url参数
 function setUrlPtmt(obj) {
     let _params = [];
-    for(let key in obj) {
+    for (let key in obj) {
         if (obj[key] != null && obj[key] != '') {
             _params.push(key + '=' + obj[key])
         }
@@ -79,14 +80,14 @@ function removeArrayForValue(arr, val, type) {
 
 // 校验字符串
 function checkType(str, type) {
-    switch(type) {
-        case 'email': 
+    switch (type) {
+        case 'email':
             return /^[\w-]+(\.[\w-]+)*@[\w-]+(\.[\w-]+)+$/.test(str);
         case 'phone':
             return /^1[3|4|5|7|8][0-9]{9}$/.test(str);
         case 'tel':
             return /^(0\d{2,3}-\d{7,8})(-\d{1,4})?$/.test(str);
-        case 'number': 
+        case 'number':
             return /^[0-9]$/.test(str);
         case 'english':
             return /^[a-zA-Z]+$/.test(str);
@@ -96,7 +97,7 @@ function checkType(str, type) {
             return /^[a-z]+$/.test(str);
         case 'upper':
             return /^[A-Z]+$/.test(str);
-        default :
+        default:
             return true;
     }
 }
@@ -129,10 +130,10 @@ function once(fn, context) {
         }
         return result;
     }
-} 
+}
 
 // 取出一个数组中的最大值和最小值
-var numbers = [5, 458 , 120 , -215 , 228 , 400 , 122205, -85411];
+var numbers = [5, 458, 120, -215, 228, 400, 122205, -85411];
 var max = Math.max.apply(Math, numbers);
 var min Math.min.apply(Math, numbers);
 
@@ -149,6 +150,39 @@ var format = test.replace(/\B(?=(\d{3})+(?!\d))/g, ',');
 // 优雅实现金钱格式化
 function formatCash(str) {
     return str.split('').reverse().reduce((prev, next, index) => {
-            return ((index % 3) ? next : (next + ',')) + prev
-       })
+        return ((index % 3) ? next : (next + ',')) + prev
+    })
 }
+
+// 日期格式化
+Date.prototype.format = function(fmt) {
+    let t = {
+        "M+": this.getMonth() + 1, //月份 
+        "d+": this.getDate(), //日 
+        "h+": this.getHours(), //小时 
+        "m+": this.getMinutes(), //分 
+        "s+": this.getSeconds(), //秒 
+        "q+": Math.floor((this.getMonth() + 3) / 3), //季度 
+        "S": this.getMilliseconds() //毫秒 
+    };
+    if (/(y+)/.test(fmt)) {
+        fmt = fmt.replace(RegExp.$1, (this.getFullYear() + "").substr(4 - RegExp.$1.length));
+    }
+    for (var k in t) {
+        if (new RegExp("(" + k + ")").test(fmt)) {
+            fmt = fmt.replace(RegExp.$1, (RegExp.$1.length == 1) ? (t[k]) : (("00" + t[k]).substr(("" + t[k]).length)));
+        }
+    }
+    return fmt;
+}
+
+new Date().format('yy-M-d h:m:s')
+
+// 格式化数量
+function formatNum(str) {
+  return str.split('').reverse().reduce((prev, next, index) => {
+    return ((index % 3) ? next : (next + ',')) + prev
+  });
+}
+
+formatNum('2313323');
